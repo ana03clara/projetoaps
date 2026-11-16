@@ -38,4 +38,8 @@ public class Pessoa {
             this.nome = dados.nome();
         }
     }
+
+    public void excluir() {
+        this.ativo = false;
+    }
 }

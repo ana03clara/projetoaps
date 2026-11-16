@@ -19,7 +19,7 @@ public class PessoaServices {
     @Autowired
     private PessoaRepository repository;
 
-    //@Transactional
+    @Transactional
     public Pessoa cadastrar(DadosCadastroPessoa dados) {
         var pessoa = repository.save(new Pessoa(dados));
         return pessoa;
@@ -30,14 +30,21 @@ public class PessoaServices {
         return repository.findAllByAtivoTrue(paginacao)
                 .map(DadosListagemPessoa::new);
     }
-
+    @Transactional
     public Pessoa detalharPessoa(Long id) {
         return repository.getReferenceById(id);
     }
 
-    public Pessoa atualizarPessoa(@Valid DadosAtualizarPessoas dados) {
+    @Transactional
+    public Pessoa atualizarPessoa( DadosAtualizarPessoas dados) {
         var pessoa = repository.getReferenceById(dados.id());
         pessoa.atualizarInformacoesPessoa(dados);
         return pessoa;
+    }
+
+    @Transactional
+    public void excluirPessoa(Long id) {
+        var pessoa = repository.getReferenceById(id);
+        pessoa.excluir();
     }
 }

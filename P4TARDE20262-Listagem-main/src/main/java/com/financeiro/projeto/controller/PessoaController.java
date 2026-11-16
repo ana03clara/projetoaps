@@ -51,9 +51,15 @@ public class PessoaController {
 
     @PutMapping
     public ResponseEntity atualizar (@RequestBody @Valid DadosAtualizarPessoas dados ){
-        services.atualizarPessoa(dados);
+        var pessoa = services.atualizarPessoa(dados);
+        return ResponseEntity.ok(new DadosDetalhamentoPessoa(pessoa));
 
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity excluir(@PathVariable Long id){
+        services.excluirPessoa(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
